@@ -7,18 +7,24 @@ import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import Button from '@mui/material/Button';
-import SendIcon from '@mui/icons-material/Send';
+import Button from "@mui/material/Button";
+import SendIcon from "@mui/icons-material/Send";
 import { useNavigate } from "react-router";
-import { useState, createContext } from 'react';
+import { useState, useContext } from "react";
 
-export default function Login() {
+const LoginId = React.createContext();
+function Context() {
+  const [user, setUser] = useState("Kruti");
+  return <LoginId.Provider value={user} />;
+}
+
+function Login() {
   const [id, setId] = useState(false);
-    const User = createContext(id);
+
   let navigate = useNavigate();
-  const handleSignUp = ()=>{
-navigate('/signin')
-  }
+  const handleSignUp = () => {
+    navigate("/signin");
+  };
   return (
     <>
       <Box
@@ -27,7 +33,7 @@ navigate('/signin')
           justifyContent: "center",
           alignItems: "center",
           height: "100vh",
-          backgroundColor: 'grey'
+          backgroundColor: "grey",
         }}
       >
         <Paper elevation={3} sx={{ padding: 4, width: 300 }}>
@@ -45,16 +51,33 @@ navigate('/signin')
             />
           </FormControl>
 
-          <TextField label="Password" type="password" variant="standard" fullWidth sx={{ m: 1 }} />
-          <Button variant="outlined" endIcon={<SendIcon />} sx={{ marginTop: '0.5rem' }}>
+          <TextField
+            label="Password"
+            type="password"
+            variant="standard"
+            fullWidth
+            sx={{ m: 1 }}
+          />
+          <Button
+            variant="outlined"
+            endIcon={<SendIcon />}
+            sx={{ marginTop: "0.5rem" }}
+          >
             Submit
           </Button>
           <div>
             <p>
               Do not have an account?{" "}
-              < span style={{ color: "blue", cursor: 'pointer', textDecoration: 'underline' }} onClick={handleSignUp} >
+              <span
+                style={{
+                  color: "blue",
+                  cursor: "pointer",
+                  textDecoration: "underline",
+                }}
+                onClick={handleSignUp}
+              >
                 SignUp
-              </ span>{" "}
+              </span>{" "}
               here!!
             </p>
           </div>
@@ -63,4 +86,4 @@ navigate('/signin')
     </>
   );
 }
-export default User;
+export { Login, Context };

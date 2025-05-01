@@ -3,12 +3,11 @@ import Box from "@mui/material/Box";
 import { TextField, IconButton, InputAdornment, Button } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 
 export default function SignUpPage() {
-  // const [id, setId] = useState(false);
-  // const user = createContext(validUserId);
+  
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [form, setForm] = useState({
