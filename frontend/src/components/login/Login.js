@@ -18,7 +18,7 @@ function Context() {
   return <LoginId.Provider value={user} />;
 }
 
-function Login() {
+export default function Login() {
   const [id, setId] = useState(false);
 
   let navigate = useNavigate();
@@ -86,4 +86,4 @@ function Login() {
     </>
   );
 }
-export { Login, Context };
+export { Context, LoginId };

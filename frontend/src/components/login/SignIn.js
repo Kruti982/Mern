@@ -6,8 +6,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import { useNavigate } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 
-export default function SignUpPage() {
-  
+export default function SignIn() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [form, setForm] = useState({
@@ -25,8 +24,28 @@ export default function SignUpPage() {
     passwordMatch: true,
     passwordStrength: true,
   });
-  const handleSubmit = () => {
-    navigate("/");
+  const handleSubmit = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/api/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert(data.message);
+        navigate("/");
+      } else {
+        alert(`Error: ${data.error}`);
+      }
+    } catch (err) {
+      console.error("Submit failed:", err);
+      alert("Something went wrong!");
+    }
   };
 
   const handleChange = (e) => {
