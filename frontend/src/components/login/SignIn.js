@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import { TextField, IconButton, InputAdornment, Button } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
@@ -24,9 +24,10 @@ export default function SignIn() {
     passwordMatch: true,
     passwordStrength: true,
   });
+
   const handleSubmit = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/signup", {
+      const response = await fetch("http://localhost:5000/api/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -69,7 +70,7 @@ export default function SignIn() {
     }
 
     if (name === "password") {
-      const passwordValid = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{1,}$/;
+      const passwordValid = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/;
       setErrors((prev) => ({
         ...prev,
         passwordStrength: passwordValid.test(value),
@@ -201,7 +202,18 @@ export default function SignIn() {
           variant="standard"
         />
 
-        <Button variant="contained" sx={{ m: 2 }} onClick={handleSubmit}>
+        <Button
+          variant="contained"
+          sx={{ m: 2 }}
+          onClick={handleSubmit}
+          disabled={
+            errors.phone ||
+            errors.email ||
+            !errors.passwordMatch ||
+            !errors.passwordStrength ||
+            Object.values(form).some((field) => field === "")
+          }
+        >
           Submit
         </Button>
       </Box>

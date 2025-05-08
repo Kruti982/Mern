@@ -1,16 +1,11 @@
-// db.js
 const mongoose = require("mongoose");
 
-async function connectDB() {
-  try {
-    await mongoose.connect("mongodb://localhost:27017/myDatabase", {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    console.log("MongoDB connected");
-  } catch (error) {
-    console.error("Connection failed", error);
-  }
-}
+const userSchema = new mongoose.Schema({
+  name: String,
+  lastName: String,
+  phone: String,
+  email: { type: String, unique: true },
+  password: String,
+});
 
-module.exports = connectDB;
+module.exports = mongoose.model("User", userSchema);

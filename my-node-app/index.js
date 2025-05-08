@@ -1,14 +1,25 @@
 const express = require("express");
 const db = require("./MongoDb/Mongo");
 const app = express();
-const port = 3000;
-const mongoose = require("mongoose");
+const port = 5000;
+// const mongoose = require("mongoose");
+const User = require("./models/Users");
 const connectDB = require("./MongoDb/Mongo");
+
 const cors = require("cors");
 app.use(cors());
 
 app.use(express.json());
 connectDB();
+app.get("/api/users", async (req, res) => {
+  try {
+    const users = await User.find(); // Fetch all users
+    res.status(200).json(users);
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
 
 app.post("/api/signup", async (req, res) => {
   const { name, lastName, phone, email, password } = req.body;

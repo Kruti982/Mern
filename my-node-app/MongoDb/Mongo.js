@@ -1,17 +1,15 @@
-// db.js
-const { MongoClient } = require("mongodb");
-
-const uri =
-  "mongodb+srv://kruti:kruti123@cluster0.ymmc0el.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"; // Replace with your URI
-const client = new MongoClient(uri);
+const mongoose = require("mongoose");
 
 async function connectDB() {
   try {
-    await client.connect();
-    console.log("Connected to MongoDB");
-
-    const db = client.db("myDatabase"); // Use your DB name
-    return db;
+    await mongoose.connect(
+      "mongodb+srv://kruti:kruti%40123@cluster0.yat78mg.mongodb.net/myDatabase?retryWrites=true&w=majority",
+      {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      }
+    );
+    console.log("MongoDB connected");
   } catch (error) {
     console.error("Connection failed", error);
   }
