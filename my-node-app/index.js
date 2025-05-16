@@ -13,10 +13,25 @@ app.use(express.json());
 connectDB();
 app.get("/api/users", async (req, res) => {
   try {
-    const users = await User.find(); // Fetch all users
-    res.status(200).json(users);
+    const { email, password } = req.query;
+
+    console.log("Query params:", req.query);
+
+    if (!email || !password) {
+      return res
+        .status(400)
+        .json({ error: "Email and password are required." });
+    }
+
+    const user = await User.findOne({ email, password });
+
+    if (user) {
+      return res.status(200).json(user);
+    } else {
+      return res.status(401).json({ error: "Invalid email or password" });
+    }
   } catch (error) {
-    console.error("Error fetching users:", error);
+    console.error("Error in /api/users:", error);
     res.status(500).send("Internal Server Error");
   }
 });
